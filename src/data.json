@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "question": "how would you say goodbye in spanish",
+    "answer": "adios",
+    "options": ["adios", "hola", "au revoir", "salir"]
+  },
+  {
+    "id": "2",
+    "question": "how would you say goodbye in spanish",
+    "answer": "italy",
+    "options": ["italy", "portugal", "mexico", "france"]
+  }
+]
