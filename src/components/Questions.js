@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import { Fragment, useContext } from 'react';
 import Options from './Options';
 import Footer from './Footer';
+import QuizContext from '../store/quiz-context';
 
-const Questions = ({ data, setsubmission, results, setplay }) => {
-  const [newData, setnewData] = useState();
+const Questions = () => {
+  const { newData, results, getResults, getNewData, loading } =
+    useContext(QuizContext);
+
   const btnClickHandler = (e) => {
     e.preventDefault();
     if (results.length > 0) {
@@ -12,46 +14,22 @@ const Questions = ({ data, setsubmission, results, setplay }) => {
         .querySelectorAll('input[type="radio"]')
         .forEach((b) => (b.disabled = false));
       document.querySelector('form').reset();
-      setplay((prev) => !prev);
-      setnewData(null);
+      getNewData();
     } else {
       const form = new FormData(e.target.parentElement.parentElement);
-      setsubmission(
+      getResults(
         newData.map((d) => {
           return { id: d.id, answer: form.get(`q${d.id}`) };
         }),
       );
+
       document
         .querySelectorAll('input[type="radio"]')
         .forEach((b) => (b.disabled = true));
     }
   };
 
-  useEffect(() => {
-    setnewData(
-      data.map((q, i) => {
-        const randIndex = Math.floor(Math.random() * 4);
-        const options = q.incorrect_answers;
-        options.splice(randIndex, 0, q.correct_answer);
-        return {
-          id: i + 1,
-          options,
-          question: q.question,
-          answer: q.correct_answer,
-        };
-      }),
-    );
-  }, [data]);
-
-  const convert = (str) => {
-    return str
-      .replace(/&amp;/g, '&')
-      .replace(/&gt;/g, '>')
-      .replace(/&lt;/g, '<')
-      .replace(/&#039;/g, "'")
-      .replace(/&quot;/g, '"');
-  };
-
+  console.log(loading);
   return (
     <>
       <a
@@ -61,22 +39,21 @@ const Questions = ({ data, setsubmission, results, setplay }) => {
         rel="noopener noreferrer">
         <h1 className="brand">Quizzical</h1>
       </a>
-      {newData ? (
+      {!loading ? (
         <form className="quiz-wrap">
           {newData.map((quiz, quizIndex) => {
             return (
-              <React.Fragment key={quiz.id}>
+              <Fragment key={quiz.id}>
                 <div className="quiz" name={`quiz${quiz.id}`}>
-                  <p className="q">{`${quiz.id}) ` + convert(quiz.question)}</p>
+                  <p className="q">{`${quiz.id}) ` + quiz.question}</p>
                   <Options
                     result={results[quizIndex]}
-                    convert={convert}
                     quiz={quiz}
                     quizIndex={quizIndex}
                   />
                 </div>
                 <hr />
-              </React.Fragment>
+              </Fragment>
             );
           })}
           <Footer results={results} btnClickHandler={btnClickHandler} />

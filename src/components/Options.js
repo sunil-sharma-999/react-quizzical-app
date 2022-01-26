@@ -1,7 +1,7 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 
-const Options = ({ result, quiz, convert }) => {
+const Options = ({ result, quiz }) => {
   return (
     <div className="options">
       {quiz.options.map((option, optionIndex) => {
@@ -20,7 +20,7 @@ const Options = ({ result, quiz, convert }) => {
                 result ? (option === result.answer ? 'true' : 'false rest') : ''
               }`}
               htmlFor={nano}>
-              {convert(option)}
+              {option}
             </label>
           </div>
         );

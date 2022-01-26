@@ -33,9 +33,12 @@
 .wrap {
   font-size: 1rem;
   max-width: 550px;
+  padding: 0 1.5rem;
   background: #f5f7fb;
   text-align: center;
+  margin: 2rem 0;
   .start-page {
+    background-color: inherit;
     h1 {
       font-size: 32px;
       line-height: 36px;
@@ -114,8 +117,12 @@
 
 .wrap {
   .q-link {
+    background-color: inherit;
     text-decoration: none;
     font-size: 1.5rem;
+  }
+  h4 {
+    background-color: inherit;
   }
 }
 .score-wrap {
